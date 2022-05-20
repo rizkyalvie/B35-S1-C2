@@ -11,6 +11,9 @@ const __filename = fileURLToPath(
     import.meta.url
 );
 
+const apActive = true;
+const homeActive = true;
+
 const __dirname = dirname(__filename);
 
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
@@ -22,13 +25,16 @@ app.use(express.urlencoded({ extended: false }))
 app.set('view engine', 'hbs')
 
 app.get('/', function(req, res) {
+
     res.render('index', {
-        title: "Home"
+        title: "Home",
+        homeActive: true,
+        active: "active"
     })
 })
 
 app.get('/contact', function(req, res) {
-    res.render('contact', { title: "Contact" })
+    res.render('contact')
 })
 
 app.post('/contact', function(req, res) {
@@ -42,7 +48,8 @@ app.post('/contact', function(req, res) {
 })
 
 app.get('/addproject', function(req, res) {
-    res.render('addproject', { title: "Add Project" })
+
+    res.render('addproject', { title: "Add Project", apActive: true, active: "active" })
 })
 
 app.post('/addproject', function(req, res) {

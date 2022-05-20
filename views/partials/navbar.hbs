@@ -4,10 +4,10 @@
             <div class="collapse navbar-collapse nav-items" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link nav-home active ms-5" aria-current="page" href="/">Home</a>
+                        <a class="nav-link nav-home {{#if homeActive}} {{/if}} ms-5" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-blog" href="/addproject">Add project</a>
+                        <a class="nav-link nav-blog {{#if apActive}} {{/if}}" href="/addproject">Add project</a>
                     </li>
                 </ul>
                 <div class="d-flex nav-cm">
