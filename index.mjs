@@ -11,9 +11,6 @@ const __filename = fileURLToPath(
     import.meta.url
 );
 
-const apActive = true;
-const homeActive = true;
-
 const __dirname = dirname(__filename);
 
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
