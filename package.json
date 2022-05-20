@@ -1,0 +1,25 @@
+{
+    "name": "chapter-2",
+    "version": "1.0.0",
+    "description": "Dumbways.id Fullstack Developer Bootcamp Chapter 2",
+    "main": "index.mjs",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rizkyalvie/B35-S1-C2-D1.git"
+    },
+    "author": "Ananda Rizky Alvie Nuryahya",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/rizkyalvie/B35-S1-C2-D1/issues"
+    },
+    "homepage": "https://github.com/rizkyalvie/B35-S1-C2-D1#readme",
+    "dependencies": {
+        "express": "^4.18.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.16"
+    }
+}
