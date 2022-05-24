@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> head}}
+
+<body>
+    {{> navbar}}
+
+    <!--ADD PROJECT-->
+    <div class="ap-title my-5">
+        <p>ADD PROJECT</p>
+    </div>
+    <div class="ap-form m-auto">
+        <form action="/addproject" method="POST">
+            <div class="mb-3">
+                <label for="projectInputName" class="form-label">Project Name</label>
+                <input type="text" class="form-control" id="projectInputName" aria-describedby="emailHelp" name="projectTitle">
+            </div>
+            <div class="mb-3 d-flex" style="gap: 10px;">
+                <div class="start-date w-100">
+                    <label for="projectInputStartDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="projectInputStartDate" name="projectStartDate">
+                </div>
+                <div class="end-date w-100">
+                    <label for="projectInputEndDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="projectInputEndDate" name="projectEndDate">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="projectDescription">Description</label>
+                <textarea id="projectDescription" class="form-control" name="projectContent"></textarea>
+            </div>
+            <div class="mpi-check-cont">
+                <label for="checkTitle">Technologies</label>
+                <div class="mpi-check">
+                    <div class="check-left">
+                        <div>
+                            <label for="checkHtml" class="check-label">HTML
+                            <input type="checkbox" id="checkHtml" name="checkHtml">
+                            <span class="checkmark"></span>
+                        </label>
+                        </div>
+                        <div>
+                            <label for="checkNode" class="check-label">Node Js
+                            <input type="checkbox" id="checkNode" name="checkNode">
+                            <span class="checkmark"></span>
+                        </label>
+                        </div>
+                    </div>
+                    <div class="check-right">
+                        <div>
+                            <label for="checkCss" class="check-label">CSS
+                            <input type="checkbox" id="checkCss" name="checkCss">
+                            <span class="checkmark"></span>
+                        </label>
+                        </div>
+                        <div>
+                            <label for="checkReact" class="check-label">React Js
+                            <input type="checkbox" id="checkReact" name="checkReact">
+                            <span class="checkmark"></span>
+                        </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label>Upload Image</label>
+                <div class="mpi-image">
+                    <label for="inputImage">
+            <div class="mpi-choose">Choose</div>
+            <div class="mpi-attach"><i class="fa-solid fa-paperclip"></i></div>
+            </label>
+                    <input type="file" id="inputImage" name="projectImage" hidden />
+                </div>
+            </div>
+            <div class="ap-btn text-end">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!--ADD PROJECT END-->
+
+</body>
+
+</html>

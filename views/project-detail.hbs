@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> head}}
+
+<body>
+    <!--NAV START-->
+    {{> navbar}}
+    <!--NAV END-->
+
+    <!--Blog Detail-->
+    <div id="blog-detail">
+        <!--BD = Blog Detail-->
+        <div class="bd-title">
+            <p>{{ project.projectTitle }}</p>
+        </div>
+        <!--IDC = Image, Duration, Categories-->
+        <div class="bd-idc">
+            <div class="idc-left">
+                <img src="/public/assets/{{ project.projectImage }}" alt="Blog Image">
+            </div>
+            <div class="idc-right">
+                <p>Duration</p>
+                <div class="bd-duration">
+                    <div>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <p class="pt-3">{{ project.projectDetailDate.sdDate }} {{ project.projectDetailDate.sdMonth }} {{ project.projectDetailDate.sdYear }} - {{ project.projectDetailDate.edDate }} {{ project.projectDetailDate.edMonth }} {{ project.projectDetailDate.edYear }} </p>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-clock"></i>
+                        <p class="pt-3">{{ project.projectDuration }}</p>
+                    </div>
+                </div>
+                <div class="bd-tech">
+                    <p>Technologies</p>
+                    <div class="tech-body">
+                        {{#if project.projectTech.checkHtml }} 
+                            <div class="tech-html">
+                            <i class="fa-brands fa-html5"></i>
+                            <p>HTML</p>
+                            </div>
+                        {{/if}}
+                        {{#if project.projectTech.checkCss }}
+                            <div class="tech-css">
+                                <i class="fa-brands fa-css3-alt"></i>
+                                <p>CSS</p>
+                            </div>
+                        {{/if}}
+                        {{#if project.projectTech.checkNode }}
+                        <div class="tech-node">
+                            <i class="fa-brands fa-node-js"></i>
+                            <p>nodeJs</p>
+                        </div>
+                        {{/if}}
+                        {{#if project.projectTech.checkReact}}
+                        <div class="tech-react">
+                            <i class="fa-brands fa-react"></i>
+                            <p>reactJs</p>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bd-content">
+            <p>
+                {{ project.projectContent }}
+            </p>
+        </div>
+    </div>
+    <!--xBlog Detailx-->
+</body>
+
+</html>
