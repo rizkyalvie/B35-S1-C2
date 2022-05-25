@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+import { Pool } from 'pg';
 
 const dbPool = new Pool({
     database: 'b35_personal_web',

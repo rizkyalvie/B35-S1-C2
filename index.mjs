@@ -3,7 +3,7 @@ import hbs from 'hbs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import db from './connection/db.js'
+import db from './connection/db'
 
 const app = express()
 
