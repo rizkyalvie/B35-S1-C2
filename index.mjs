@@ -96,23 +96,6 @@ app.get('/contact', function(req, res) {
 
 app.post('/contact', function(req, res) {
 
-    let contact = {...req.body }
-
-    function showData() {
-
-        if (contact == "") {
-            return alert("All form input must be filled to continue")
-        }
-
-        let emailReceiver = "dev@mail.com"
-
-
-        href = `mailto:${emailReceiver}?subject=${contact.subject}&body=Hello, my name is ${contact.name}, ${contact.subject}, ${contact.message}`
-        click()
-    }
-
-    showData()
-
 })
 
 app.get('/addproject', function(req, res) {
