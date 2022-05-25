@@ -8,11 +8,16 @@
     },
     "repository": {
         "type": "git",
+<<<<<<< HEAD
         "url": "git+https://github.com/rizkyalvie/B35-S1-C2.git"
+=======
+        "url": "git+https://github.com/rizkyalvie/B35-S1-C2-D1.git"
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
     },
     "author": "Ananda Rizky Alvie Nuryahya",
     "license": "ISC",
     "bugs": {
+<<<<<<< HEAD
         "url": "https://github.com/rizkyalvie/B35-S1-C2/issues"
     },
     "homepage": "https://github.com/rizkyalvie/B35-S1-C2#readme",
@@ -21,6 +26,15 @@
         "handlebars": "^4.7.7",
         "hbs": "^4.2.0",
         "pg": "^8.7.3"
+=======
+        "url": "https://github.com/rizkyalvie/B35-S1-C2-D2/issues"
+    },
+    "homepage": "https://github.com/rizkyalvie/B35-S1-C2-D2#readme",
+    "dependencies": {
+        "express": "^4.18.1",
+        "handlebars": "^4.7.7",
+        "hbs": "^4.2.0"
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
     },
     "devDependencies": {
         "nodemon": "^2.0.16"

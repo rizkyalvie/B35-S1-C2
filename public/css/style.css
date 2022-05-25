@@ -226,7 +226,10 @@ nav li a {
     font-size: 32px;
     gap: 22px;
     margin: 10px 0px;
+<<<<<<< HEAD
     height: 30px;
+=======
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
 }
 
 .mpc-mod {
@@ -235,19 +238,30 @@ nav li a {
     text-align: center;
 }
 
+<<<<<<< HEAD
 .mpc-mod a {
+=======
+.mpc-mod button {
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
     padding: 5px 10px;
     border: 0;
     border-radius: 4px;
     background: var(--btn);
+<<<<<<< HEAD
     text-decoration: none;
+=======
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
     color: #fff;
     cursor: pointer;
     width: 50%;
 }
 
+<<<<<<< HEAD
 .mpc-mod a:hover {
     color: white;
+=======
+.mpc-mod button:hover {
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
     background-color: var(--btn-hover)
 }
 
@@ -618,6 +632,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 
+<<<<<<< HEAD
 /* x Blog Detail x */
 
 
@@ -632,3 +647,6 @@ textarea::-webkit-scrollbar-thumb {
 
 
 /* x edit project */
+=======
+/* x Blog Detail x */
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2

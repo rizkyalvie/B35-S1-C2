@@ -3,7 +3,11 @@ import hbs from 'hbs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+<<<<<<< HEAD
 import db from './connection/db.js'
+=======
+
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
 
 const app = express()
 
@@ -15,12 +19,17 @@ const __dirname = dirname(__filename);
 
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
+<<<<<<< HEAD
 app.use('/public', express.static(__dirname + '/public'))
+=======
+app.use('/public', express.static(__dirname + '/Public'))
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
 
 app.use(express.urlencoded({ extended: false }))
 
 app.set('view engine', 'hbs')
 
+<<<<<<< HEAD
 // --------------------------------------------------------
 
 let project = []
@@ -88,6 +97,15 @@ app.get('/', function(req, res) {
         done();
     })
 
+=======
+app.get('/', function(req, res) {
+
+    res.render('index', {
+        title: "Home",
+        homeActive: true,
+        active: "active"
+    })
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
 })
 
 app.get('/contact', function(req, res) {
@@ -96,6 +114,15 @@ app.get('/contact', function(req, res) {
 
 app.post('/contact', function(req, res) {
 
+<<<<<<< HEAD
+=======
+    const contact = req.body;
+
+    console.log(JSON.stringify(contact, null, 2))
+
+    res.redirect('/')
+
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
 })
 
 app.get('/addproject', function(req, res) {
@@ -105,6 +132,7 @@ app.get('/addproject', function(req, res) {
 
 app.post('/addproject', function(req, res) {
 
+<<<<<<< HEAD
     const projectImage = req.body.projectImage;
     const projectTitle = req.body.projectTitle;
     const projectContent = req.body.projectContent;
@@ -163,11 +191,17 @@ app.post('/addproject', function(req, res) {
     }
 
     project.push(projectData)
+=======
+    const project = req.body;
+
+    console.log(JSON.stringify(project, null, 2));
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
 
     res.redirect('/')
 
 })
 
+<<<<<<< HEAD
 app.get('/project-detail/:projectTitle', function(req, res) {
 
     let data = project.find(item =>
@@ -286,6 +320,11 @@ app.post('/editproject/:id', function(req, res) {
     };
     res.redirect('/')
 
+=======
+
+app.get('/project-detail', function(req, res) {
+    res.render('project-detail', { title: "Project Detail" })
+>>>>>>> c1d1cc9fe2b6fd4e7c41670e1571a7543f60eff2
 })
 
 
