@@ -16,8 +16,9 @@
     "dependencies": {
         "express": "^4.18.1",
         "handlebars": "^4.7.7",
-        "hbs": "^4.2.0"
-
+        "handlebars-helper-ternary": "^1.0.0",
+        "hbs": "^4.2.0",
+        "pg": "^8.7.3"
     },
     "devDependencies": {
         "nodemon": "^2.0.16"

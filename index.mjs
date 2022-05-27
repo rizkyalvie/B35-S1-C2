@@ -23,20 +23,6 @@ app.set('view engine', 'hbs')
 
 // --------------------------------------------------------
 
-let month = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec"
-]
 
 function getProjectDuration(endDate, startDate) {
 
@@ -60,6 +46,21 @@ function getProjectDuration(endDate, startDate) {
         return `${Math.floor(dayDistance)}` + ' Hari'
     }
 }
+
+let month = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec"
+]
 
 function getFullTime(time, time2) {
     time = new Date(time);
@@ -156,19 +157,35 @@ app.post('/addproject', function(req, res) {
     const start_date = req.body.projectStartDate
     const end_date = req.body.projectEndDate
     const description = req.body.projectContent
-    const technologies = {
-        checkHtml: req.body.checkHtml,
-        checkCss: req.body.checkCss,
-        checkNode: req.body.checkNode,
-        checkReact: req.body.checkReact
-    }
+    const technologies = []
     const image = req.body.projectImage
+
+    if (req.body.checkHtml) {
+        technologies.push('html');
+    } else {
+        technologies.push('')
+    }
+    if (req.body.checkCss) {
+        technologies.push('css');
+    } else {
+        technologies.push('')
+    }
+    if (req.body.checkNode) {
+        technologies.push('node.js');
+    } else {
+        technologies.push('')
+    }
+    if (req.body.checkReact) {
+        technologies.push('react.js');
+    } else {
+        technologies.push('')
+    }
 
     db.connect(function(err, client, done) {
         if (err) throw err;
 
         const query = `INSERT INTO tb_project (title, start_date, end_date, description, technologies, image) 
-                       VALUES ('${title}', '${start_date}', '${end_date}', '${description}', ARRAY ['${technologies.checkHtml}', '${technologies.checkCss}','${technologies.checkNode}', '${technologies.checkReact}'], '${image}')`
+                       VALUES ('${title}', '${start_date}', '${end_date}', '${description}', ARRAY ['${technologies[0]}', '${technologies[1]}','${technologies[2]}', '${technologies[3]}'], '${image}')`
 
         client.query(query, function(err, result) {
             if (err) throw err;
@@ -256,17 +273,35 @@ app.post('/editproject/:id', function(req, res) {
     const start_date = req.body.projectStartDate
     const end_date = req.body.projectEndDate
     const description = req.body.projectContent
-    const checkHtml = req.body.checkHtml
-    const checkCss = req.body.checkCss
-    const checkNode = req.body.checkNode
-    const checkReact = req.body.checkReact
-    const image = req.body.projectImage
+    const technologies = []
+    const image = req.body.editImage
+
+    if (req.body.checkHtml) {
+        technologies.push('html');
+    } else {
+        technologies.push('')
+    }
+    if (req.body.checkCss) {
+        technologies.push('css');
+    } else {
+        technologies.push('')
+    }
+    if (req.body.checkNode) {
+        technologies.push('node.js');
+    } else {
+        technologies.push('')
+    }
+    if (req.body.checkReact) {
+        technologies.push('react.js');
+    } else {
+        technologies.push('')
+    }
 
     db.connect(function(err, client, done) {
         if (err) throw err;
 
         const query = `UPDATE tb_project 
-                       SET title = '${title}', start_date = '${start_date}', end_date = '${end_date}', description = '${description}', technologies = ARRAY ['${checkHtml}', '${checkCss}','${checkNode}', '${checkReact}'], image='${image}' 
+                       SET title = '${title}', start_date = '${start_date}', end_date = '${end_date}', description = '${description}', technologies = ARRAY ['${technologies[0]}', '${technologies[1]}','${technologies[2]}', '${technologies[3]}'], image='${image}' 
                        WHERE id=${id};`
 
         client.query(query, function(err, result) {
