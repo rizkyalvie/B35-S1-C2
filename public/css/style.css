@@ -263,7 +263,6 @@ nav li a {
     gap: 10px;
     text-align: center;
     padding: 10px;
-    border: 1px solid #c4c4c4;
 }
 
 .mpc-modal a {
@@ -277,9 +276,18 @@ nav li a {
     width: 50%;
 }
 
+.modal-dialog {
+    overflow: hidden !important;
+}
+
 .mpc-mod a:hover {
     color: white;
     background-color: var(--btn-hover)
+}
+
+.mpc-modal-pop {
+    margin-top: 200px !important;
+    overflow: hidden !important;
 }
 
 

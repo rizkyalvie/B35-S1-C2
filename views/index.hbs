@@ -79,29 +79,27 @@
                         </div>
                         <div class="mpc-mod">
                             <a href="/editproject/{{ this.id }}">Edit</a>
-                            <a data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
                         </div>
                     </div>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-triangle-exclamation"></i> WARNING!</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-          <div class="mb-1">
-            <label for="recipient-name" class="col-form-label">Are you sure want to delete?</label>
-          </div>
-        
-      </div>
-      <div class="mpc-modal" style="diplay: flex !important;">
-        <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-        <a href="/delete-project/{{ this.id }}">Delete Project</a>
-      </div>
+                    <div class="modal fade mpc-modal-pop" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel"><i class="fa-solid fa-triangle-exclamation"></i> WARNING!</h5>
+                                    </div>
+                                <div class="modal-body">
+                                <div class="mb-1">
+                                    <label for="recipient-name" class="col-form-label">Are you sure?</label>
+                                </div>
+                            </div>
+                        <div class="mpc-modal" style="diplay: flex !important;">
+                    <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                <a href="/delete-project/{{ this.id }}">Delete Project</a>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+                    </div>
                     {{/each}}
                 </div>
             </div>
