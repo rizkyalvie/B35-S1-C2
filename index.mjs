@@ -23,9 +23,55 @@ app.set('view engine', 'hbs')
 
 // --------------------------------------------------------
 
-let project = []
+let month = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec"
+]
 
+function getProjectDuration(endDate, startDate) {
 
+    endDate = new Date(endDate)
+    startDate = new Date(startDate)
+
+    const distance = endDate - startDate
+
+    const miliseconds = 1000
+    const secondInMinute = 60
+    const minuteInHour = 60
+    const secondInHour = secondInMinute * minuteInHour // 3600
+    const hourInDay = 23
+    const dayInMonth = 30
+
+    let dayDistance = distance / (miliseconds * secondInHour * hourInDay)
+
+    if (dayDistance >= 30) {
+        return `${Math.floor(dayDistance / dayInMonth)}` + ` Bulan`
+    } else {
+        return `${Math.floor(dayDistance)}` + ' Hari'
+    }
+}
+
+function getFullTime(time, time2) {
+    time = new Date(time);
+    const date = time.getDate();
+    const monthIndex = time.getMonth();
+    const year = time.getFullYear();
+    let hour = time.getHours();
+    let minute = time.getMinutes();
+    const fullTime = `${date} ${month[monthIndex]} ${year}`;
+
+    return fullTime
+}
 
 app.get('/', function(req, res) {
 
@@ -100,92 +146,81 @@ app.post('/contact', function(req, res) {
 
 app.get('/addproject', function(req, res) {
 
+
     res.render('addproject', { title: "Add Project", apActive: true, active: "active" })
 })
 
 app.post('/addproject', function(req, res) {
 
-    const projectImage = req.body.projectImage;
-    const projectTitle = req.body.projectTitle;
-    const projectContent = req.body.projectContent;
-
-    const projectDate = {
-        startDate: req.body.projectStartDate,
-        endDate: req.body.projectEndDate
-    }
-    const projectTech = {
+    const title = req.body.projectTitle
+    const start_date = req.body.projectStartDate
+    const end_date = req.body.projectEndDate
+    const description = req.body.projectContent
+    const technologies = {
         checkHtml: req.body.checkHtml,
-        checkNode: req.body.checkNode,
         checkCss: req.body.checkCss,
+        checkNode: req.body.checkNode,
         checkReact: req.body.checkReact
     }
+    const image = req.body.projectImage
 
-    let month = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sept",
-        "Oct",
-        "Nov",
-        "Dec"
-    ]
+    db.connect(function(err, client, done) {
+        if (err) throw err;
 
-    let endDate = new Date(projectDate.endDate)
-    let startDate = new Date(projectDate.startDate)
+        const query = `INSERT INTO tb_project (title, start_date, end_date, description, technologies, image) 
+                       VALUES ('${title}', '${start_date}', '${end_date}', '${description}', ARRAY ['${technologies.checkHtml}', '${technologies.checkCss}','${technologies.checkNode}', '${technologies.checkReact}'], '${image}')`
 
+        client.query(query, function(err, result) {
+            if (err) throw err;
 
-
-    const projectDetailDate = {
-
-        edDate: endDate.getDate(),
-        edMonth: month[endDate.getMonth()],
-        edYear: endDate.getFullYear(),
-        sdDate: startDate.getDate(),
-        sdMonth: month[startDate.getMonth()],
-        sdYear: startDate.getFullYear()
-    }
-
-    const projectDuration = getProjectDuration()
-
-    const projectData = {
-        projectImage,
-        projectTitle,
-        projectContent,
-        projectDate,
-        projectDuration,
-        projectTech,
-        projectDetailDate
-    }
-
-    project.push(projectData)
-
-    res.redirect('/')
+            res.redirect('/')
+        })
+        done();
+    })
 
 })
 
-app.get('/project-detail/:projectTitle', function(req, res) {
+app.get('/project-detail/:id', function(req, res) {
 
-    let data = project.find(item =>
-        item.projectTitle === req.params.projectTitle
+    let id = req.params.id
 
-    )
+    db.connect(function(err, client, done) {
+        if (err) throw err;
+        const query = `SELECT * FROM tb_project WHERE id = ${id}`;
 
+        client.query(query, function(err, result) {
+            if (err) throw err;
 
-    res.render('project-detail', { title: "Project Detail", project: data })
+            const projectDetail = result.rows[0];
+
+            projectDetail.duration = getProjectDuration(projectDetail.end_date, projectDetail.start_date)
+            projectDetail.start_date = getFullTime(projectDetail.start_date)
+            projectDetail.end_date = getFullTime(projectDetail.end_date)
+
+            res.render('project-detail', { title: "Project Detail", project: projectDetail })
+        });
+
+        done();
+    });
 })
 
 app.get('/delete-project/:id', function(req, res) {
 
-    let data = req.params.id
+    let id = req.params.id
 
-    project.splice(data, 1)
+    db.connect(function(err, client, done) {
+        if (err) throw err;
 
-    res.redirect('/')
+        const query = `DELETE FROM tb_project WHERE id = ${id};`;
+
+        client.query(query, function(err, result) {
+            if (err) throw err;
+
+            res.redirect('/');
+        });
+
+        done();
+    });
 
 })
 
@@ -193,98 +228,54 @@ app.get('/editproject/:id', function(req, res) {
 
     let data = req.params.id
 
-    let edit = project[data]
+    db.connect(function(err, client, done) {
+        if (err) throw err;
 
-    res.render('editproject', { id: data, title: 'Edit Project', editForm: edit })
+        const query = `SELECT * FROM tb_project WHERE id= ${data};`
+
+        client.query(query, function(err, result) {
+            if (err) throw err;
+
+            const projectData = result.rows[0];
+
+            res.render('editproject', {
+                title: "Edit Project",
+                edit: projectData,
+                id: data
+            })
+        })
+        done();
+    })
 })
 
 app.post('/editproject/:id', function(req, res) {
 
-    const projectImage = req.body.editImage;
-    const projectTitle = req.body.projectTitle;
-    const projectContent = req.body.projectContent;
+    let id = req.params.id
 
-    const projectDate = {
-        startDate: req.body.projectStartDate,
-        endDate: req.body.projectEndDate
-    }
-    const projectTech = {
-        checkHtml: req.body.checkHtml,
-        checkNode: req.body.checkNode,
-        checkCss: req.body.checkCss,
-        checkReact: req.body.checkReact
-    }
+    const title = req.body.projectTitle
+    const start_date = req.body.projectStartDate
+    const end_date = req.body.projectEndDate
+    const description = req.body.projectContent
+    const checkHtml = req.body.checkHtml
+    const checkCss = req.body.checkCss
+    const checkNode = req.body.checkNode
+    const checkReact = req.body.checkReact
+    const image = req.body.projectImage
 
-    let month = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sept",
-        "Oct",
-        "Nov",
-        "Dec"
-    ]
+    db.connect(function(err, client, done) {
+        if (err) throw err;
 
-    let endDate = new Date(projectDate.endDate)
-    let startDate = new Date(projectDate.startDate)
+        const query = `UPDATE tb_project 
+                       SET title = '${title}', start_date = '${start_date}', end_date = '${end_date}', description = '${description}', technologies = ARRAY ['${checkHtml}', '${checkCss}','${checkNode}', '${checkReact}'], image='${image}' 
+                       WHERE id=${id};`
 
-    function getProjectDuration(endDate, startDate) {
+        client.query(query, function(err, result) {
+            if (err) throw err;
 
-        endDate = new Date(projectDate.endDate)
-        startDate = new Date(projectDate.startDate)
-
-        const distance = endDate - startDate
-
-        const miliseconds = 1000
-        const secondInMinute = 60
-        const minuteInHour = 60
-        const secondInHour = secondInMinute * minuteInHour // 3600
-        const hourInDay = 23
-        const dayInMonth = 30
-
-        let dayDistance = distance / (miliseconds * secondInHour * hourInDay)
-
-        if (dayDistance >= 30) {
-            return `${Math.floor(dayDistance / dayInMonth)}` + ` Bulan`
-        } else {
-            return `${Math.floor(dayDistance)}` + ' Hari'
-        }
-    }
-
-    const projectDetailDate = {
-
-        edDate: endDate.getDate(),
-        edMonth: month[endDate.getMonth()],
-        edYear: endDate.getFullYear(),
-        sdDate: startDate.getDate(),
-        sdMonth: month[startDate.getMonth()],
-        sdYear: startDate.getFullYear()
-    }
-
-    const projectDuration = getProjectDuration()
-
-    const projectData = {
-        projectImage,
-        projectTitle,
-        projectContent,
-        projectDate,
-        projectDuration,
-        projectTech,
-        projectDetailDate
-    }
-
-    let data = req.params.id
-
-    project[data] = {
-        ...project[data],
-        ...projectData
-    };
-    res.redirect('/')
+            res.redirect('/')
+        })
+        done();
+    })
 
 })
 

@@ -58,12 +58,16 @@
                         <div class="mpc-img">
                             <img src="public/assets/{{ this.image }}" alt="Thumbnail Image">
                         </div>
-                        <div class="mpc-title">
-                            <a href="/project-detail/{{ this.title }}" action="/project-detail" target="_blank">
+                       <div>
+                            <div class="mpc-title">
+                            <a href="/project-detail/{{ this.id }}" action="/project-detail" target="_blank">
                                 <p>{{ this.title }}</p>
                             </a>
-                            <small>Durasi: {{ this.duration }}</small>
                         </div>
+                        <div class="mpc-dur">
+                            <p>Durasi: {{ this.duration }}</p>
+                        </div>
+                       </div>
                         <div class="mpc-content">
                             {{ this.description }}
                         </div>
@@ -74,8 +78,8 @@
                            {{#if this.technologies.[3]}} <i class="fa-brands fa-react"></i> {{/if}}
                         </div>
                         <div class="mpc-mod">
-                            <a href="/editproject/{{ @index }}">Edit</a>
-                            <a href="/delete-project/{{ @index }}">Delete</a>
+                            <a href="/editproject/{{ this.id }}">Edit</a>
+                            <a href="/delete-project/{{ this.id }}">Delete</a>
                         </div>
                     </div>
                     {{/each}}

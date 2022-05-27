@@ -191,6 +191,7 @@ nav li a {
 }
 
 .mpc-title {
+    height: 23px;
     overflow: hidden;
 }
 
@@ -211,6 +212,12 @@ nav li a {
 .mpc-title a:hover {
     text-decoration: underline;
     color: black
+}
+
+.mpc-dur p {
+    font-size: 14px;
+    color: grey;
+    margin: 0 !important;
 }
 
 .mpc-content {
