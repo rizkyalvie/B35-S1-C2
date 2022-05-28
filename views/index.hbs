@@ -77,10 +77,12 @@
                            {{#if this.technologies.[2]}} <i class="fa-brands fa-node-js"></i> {{/if}}
                            {{#if this.technologies.[3]}} <i class="fa-brands fa-react"></i> {{/if}}
                         </div>
+                        {{#if isLogin}}
                         <div class="mpc-mod">
                             <a href="/editproject/{{ this.id }}" target="_blank">Edit</a>
                             <a data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
                         </div>
+                        {{/if}}
                     </div>
                     <!-- MODAL Start -->
                     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

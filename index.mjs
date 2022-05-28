@@ -73,6 +73,8 @@ function getFullTime(time, time2) {
     return fullTime
 }
 
+let isLogin = false;
+
 app.get('/', function(req, res) {
 
     db.connect(function(err, client, done) {
@@ -123,6 +125,7 @@ app.get('/', function(req, res) {
                 title: "Home",
                 homeActive: true,
                 active: "active",
+                isLogin: isLogin,
                 card: projectCard,
 
             })
