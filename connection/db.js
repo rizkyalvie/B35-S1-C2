@@ -1,9 +1,16 @@
 const { Pool } = require('pg');
 
-const connectionString = 'postgresql://postgres:mikalea6@database.server.com:3211/b35_personal_web'
+let client = new Client({
+    user: "postgres",
+    password: "mikalea6",
+    database: "b35_personal_web",
+    port: 5432,
+    host: "host",
+    ssl: true
+});
 
 const dbPool = new Pool({
-    connectionString: connectionString
+    client
 })
 
 module.exports = dbPool
