@@ -116,6 +116,7 @@ app.get('/', function(req, res) {
 
                 return {
                     duration: getProjectDuration(data.end_date, data.start_date),
+                    isLogin,
                     ...data
 
                 }
@@ -125,7 +126,7 @@ app.get('/', function(req, res) {
                 title: "Home",
                 homeActive: true,
                 active: "active",
-                isLogin: isLogin,
+                isLogin,
                 card: projectCard,
 
             })
@@ -212,7 +213,7 @@ app.get('/project-detail/:id', function(req, res) {
             projectDetail.start_date = getFullTime(projectDetail.start_date)
             projectDetail.end_date = getFullTime(projectDetail.end_date)
 
-            res.render('project-detail', { title: "Project Detail", project: projectDetail })
+            res.render('project-detail', { title: "Project Detail", isLogin, project: projectDetail })
         });
 
         done();

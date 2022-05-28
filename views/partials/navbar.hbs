@@ -6,9 +6,11 @@
                     <li class="nav-item">
                         <a class="nav-link nav-home {{#if homeActive}} active {{/if}} ms-5" aria-current="page" href="/">Home</a>
                     </li>
+                    {{#if isLogin}}
                     <li class="nav-item">
                         <a class="nav-link nav-blog {{#if apActive}} active {{/if}}" href="/addproject">Add project</a>
                     </li>
+                    {{/if}}
                 </ul>
                 <div class="d-flex nav-cm">
                     <a class="btn button-dw me-5" href="/contact">Contact me</a>
