@@ -23,7 +23,6 @@ app.set('view engine', 'hbs')
 
 // --------------------------------------------------------
 
-
 function getProjectDuration(endDate, startDate) {
 
     endDate = new Date(endDate)
@@ -76,14 +75,10 @@ function getFullTime(time, time2) {
 
 app.get('/', function(req, res) {
 
-    // let cardData = project.map(function(data) {
-    //     return {
-    //         ...data
-    //     }
-    // })
-
     db.connect(function(err, client, done) {
         if (err) throw err;
+
+
 
         const query = 'SELECT * FROM tb_project'
 
