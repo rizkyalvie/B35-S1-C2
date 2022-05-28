@@ -213,7 +213,7 @@ app.get('/project-detail/:id', function(req, res) {
             projectDetail.start_date = getFullTime(projectDetail.start_date)
             projectDetail.end_date = getFullTime(projectDetail.end_date)
 
-            res.render('project-detail', { title: "Project Detail", isLogin, project: projectDetail })
+            res.render('project-detail', { title: projectDetail.title, isLogin, project: projectDetail })
         });
 
         done();
