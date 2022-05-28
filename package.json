@@ -18,9 +18,7 @@
         "handlebars": "^4.7.7",
         "handlebars-helper-ternary": "^1.0.0",
         "hbs": "^4.2.0",
-        "pg": "^8.7.3"
-    },
-    "devDependencies": {
+        "pg": "^8.7.3",
         "nodemon": "^2.0.16"
     }
 }

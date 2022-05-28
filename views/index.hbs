@@ -78,19 +78,20 @@
                            {{#if this.technologies.[3]}} <i class="fa-brands fa-react"></i> {{/if}}
                         </div>
                         <div class="mpc-mod">
-                            <a href="/editproject/{{ this.id }}">Edit</a>
+                            <a href="/editproject/{{ this.id }}" target="_blank">Edit</a>
                             <a data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
                         </div>
                     </div>
-                    <div class="modal fade mpc-modal-pop" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                    <!-- MODAL Start -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="deleteModalLabel"><i class="fa-solid fa-triangle-exclamation"></i> WARNING!</h5>
                                     </div>
                                 <div class="modal-body">
                                 <div class="mb-1">
-                                    <label for="recipient-name" class="col-form-label">Are you sure?</label>
+                                    <label for="deleteWarning" class="col-form-label">Are you sure?</label>
                                 </div>
                             </div>
                         <div class="mpc-modal" style="diplay: flex !important;">
@@ -100,6 +101,7 @@
         </div>
     </div>
                     </div>
+                    <!-- MODAL End -->
                     {{/each}}
                 </div>
             </div>
