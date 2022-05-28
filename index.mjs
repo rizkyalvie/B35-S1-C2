@@ -61,26 +61,22 @@ let month = [
     "Dec"
 ]
 
-function getFullTime(time, time2) {
+function getFullTime(time) {
     time = new Date(time);
     const date = time.getDate();
     const monthIndex = time.getMonth();
     const year = time.getFullYear();
-    let hour = time.getHours();
-    let minute = time.getMinutes();
     const fullTime = `${date} ${month[monthIndex]} ${year}`;
 
     return fullTime
 }
 
-let isLogin = false;
+let isLogin = true;
 
 app.get('/', function(req, res) {
 
     db.connect(function(err, client, done) {
         if (err) throw err;
-
-
 
         const query = 'SELECT * FROM tb_project'
 
@@ -88,6 +84,7 @@ app.get('/', function(req, res) {
             if (err) throw err;
 
             const projectData = result.rows
+
 
             function getProjectDuration(endDate, startDate) {
 
@@ -122,11 +119,14 @@ app.get('/', function(req, res) {
                 }
             })
 
+            const projectModal = projectCard[2]
+
             res.render('index', {
                 title: "Home",
                 homeActive: true,
                 active: "active",
                 isLogin,
+                modal: projectModal,
                 card: projectCard,
 
             })
@@ -147,7 +147,7 @@ app.post('/contact', function(req, res) {
 app.get('/addproject', function(req, res) {
 
 
-    res.render('addproject', { title: "Add Project", apActive: true, active: "active" })
+    res.render('addproject', { title: "Add Project", apActive: true, active: "active", isLogin })
 })
 
 app.post('/addproject', function(req, res) {
@@ -255,7 +255,6 @@ app.get('/editproject/:id', function(req, res) {
             const projectData = result.rows[0];
 
             res.render('editproject', {
-                title: "Edit Project",
                 edit: projectData,
                 id: data
             })

@@ -80,30 +80,11 @@
                         {{#if isLogin}}
                         <div class="mpc-mod">
                             <a href="/editproject/{{ this.id }}" target="_blank">Edit</a>
-                            <a data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                            <a href="/delete-project/{{this.id}}">Delete</a>
                         </div>
                         {{/if}}
                     </div>
-                    <!-- MODAL Start -->
-                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel"><i class="fa-solid fa-triangle-exclamation"></i> WARNING!</h5>
-                                    </div>
-                                <div class="modal-body">
-                                <div class="mb-1">
-                                    <label for="deleteWarning" class="col-form-label">Are you sure?</label>
-                                </div>
-                            </div>
-                        <div class="mpc-modal" style="diplay: flex !important;">
-                    <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                <a href="/delete-project/{{ this.id }}">Delete Project</a>
-            </div>
-        </div>
-    </div>
-                    </div>
-                    <!-- MODAL End -->
+                    
                     {{/each}}
                 </div>
             </div>
