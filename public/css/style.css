@@ -89,6 +89,14 @@ nav li a {
     gap: 20px;
 }
 
+.modal {
+    pointer-events: none !important;
+}
+
+.modal-dialog {
+    pointer-events: all !important;
+}
+
 .pc-contact a {
     text-decoration: none;
     color: white;
@@ -343,16 +351,31 @@ textarea::-webkit-scrollbar-thumb {
     margin: 30px 0px !important;
 }
 
-.form-button button {
+.form-button a {
     border: none;
     padding: 5px 30px;
     border-radius: 20px;
     background-color: var(--btn);
     color: white;
+    text-decoration: none;
 }
 
-.form-button button:hover {
-    background-color: var(--btn-hover)
+.form-button a:hover {
+    background-color: var(--btn-hover);
+    color: white;
+}
+
+.modal-footer button {
+    border: none !important;
+    padding: 5px 20px !important;
+    border-radius: 5px !important;
+    background-color: var(--btn) !important;
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.modal-footer button:hover {
+    background-color: var(--btn-hover) !important
 }
 
 

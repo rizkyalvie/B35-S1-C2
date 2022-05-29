@@ -19,6 +19,8 @@
         "handlebars-helper-ternary": "^1.0.0",
         "hbs": "^4.2.0",
         "jsdom": "^19.0.0",
+        "mailto-link": "^2.0.0",
+        "nodemailer": "^6.7.5",
         "nodemon": "^2.0.16",
         "openurl": "^1.1.1",
         "pg": "^8.7.3"

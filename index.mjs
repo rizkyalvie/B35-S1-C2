@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import db from './connection/db.js';
-import openurl from 'openurl';
+import nodemailer from 'nodemailer';
 
 const app = express()
 
@@ -13,12 +13,14 @@ const __filename = fileURLToPath(
 );
 
 const __dirname = dirname(__filename);
+//handlebars
 
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 app.use('/public', express.static(__dirname + '/public'))
 
 app.use(express.urlencoded({ extended: false }))
+
 
 app.set('view engine', 'hbs')
 
@@ -138,7 +140,7 @@ app.get('/', function(req, res) {
 })
 
 app.get('/contact', function(req, res) {
-    res.render('contact')
+    res.render('contact', { title: "Contact Me" })
 })
 
 app.post('/contact', function(req, res) {
@@ -149,12 +151,30 @@ app.post('/contact', function(req, res) {
     let subject = req.body.subject
     let message = req.body.message
 
-    openurl.mailto(["dev@mail.com"], {
-        subject: `${subject}`,
-        body: `Hello, my name is ${name}, ${subject}. ${message}.`
+    let transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+            user: "b35c2testing@outlook.com",
+            pass: "hencerymonstec!!@@33"
+        },
     });
 
+    const options = {
+        from: "b35c2testing@outlook.com",
+        to: "alvienuryahya@gmail.com",
+        subject: `${subject}`,
+        text: `Hello! my name is ${name}, ${message}`
+    }
 
+    transporter.sendMail(options, function(err, info) {
+        if (err) {
+            console.log(err)
+            return;
+        }
+        console.log("Sent: " + info.response)
+    });
+
+    res.redirect('/')
 })
 
 app.get('/addproject', function(req, res) {
