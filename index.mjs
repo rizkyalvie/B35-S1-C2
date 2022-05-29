@@ -255,6 +255,7 @@ app.get('/editproject/:id', function(req, res) {
             const projectData = result.rows[0];
 
             res.render('editproject', {
+                title: 'Edit Project',
                 edit: projectData,
                 id: data
             })
