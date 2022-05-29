@@ -3,7 +3,8 @@ import hbs from 'hbs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import db from './connection/db.js'
+import db from './connection/db.js';
+import openurl from 'openurl';
 
 const app = express()
 
@@ -141,6 +142,18 @@ app.get('/contact', function(req, res) {
 })
 
 app.post('/contact', function(req, res) {
+
+    let name = req.body.name
+    let email = req.body.email
+    let phone = req.body.phone
+    let subject = req.body.subject
+    let message = req.body.message
+
+    openurl.mailto(["dev@mail.com"], {
+        subject: `${subject}`,
+        body: `Hello, my name is ${name}, ${subject}. ${message}.`
+    });
+
 
 })
 
