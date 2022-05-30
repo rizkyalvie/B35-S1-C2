@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> head}}
+
+<body>
+    {{> navbar}}
+    <!--ADD PROJECT-->
+    
+    <div class="d-flex align-items-center justify-content-center" style="flex-direction: column; margin-top: 150px;">
+        <div class="ap-title my-2">
+        <p>Login</p>
+    </div>
+    
+        <div class="ap-form">
+            {{#if messages.error}}
+          <div class='alert alert-danger w-100' role='alert'>
+            {{messages.error}}
+          </div>
+        {{/if}}
+
+        {{#if messages.warning}}
+          <div class='alert alert-warning w-100' role='alert'>
+            {{messages.warning}}
+          </div>
+        {{/if}}
+        <form action="/login" method="POST">
+            <div class="mb-3">
+                <label for="projectInputName" class="form-label">Email</label>
+                <input type="email" class="form-control" id="loginEmail" name="loginEmail">
+            </div>
+            <div class="mb-3">
+                <label for="projectInputName" class="form-label">Password</label>
+                <input type="password" class="form-control" id="loginPassword" name="loginPassword">
+            </div>
+            <div class="ap-btn text-end">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    <!--ADD PROJECT END-->
+</body>
+
+</html>
