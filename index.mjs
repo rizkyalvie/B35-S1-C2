@@ -10,7 +10,7 @@ import bcrypt from 'bcrypt';
 import session from 'express-session';
 import flash from 'express-flash';
 import { resourceUsage } from 'process';
-//package import x ----------------------
+// package import x ----------------------
 
 const app = express()
 
@@ -137,7 +137,11 @@ app.get('/', function(req, res) {
 // contact -----------------------------------------------------
 
 app.get('/contact', function(req, res) {
-    res.render('contact', { title: "Contact Me" })
+    res.render('contact', {
+        title: "Contact Me",
+        isLogin: req.session.isLogin,
+        user: req.session.user
+    })
 })
 
 app.post('/contact', function(req, res) {
@@ -257,7 +261,13 @@ app.get('/project-detail/:id', function(req, res) {
             projectDetail.start_date = getFullTime(projectDetail.start_date)
             projectDetail.end_date = getFullTime(projectDetail.end_date)
 
-            res.render('project-detail', { title: projectDetail.title, isLogin, project: projectDetail })
+            res.render('project-detail', {
+                title: projectDetail.title,
+                isLogin,
+                project: projectDetail,
+                isLogin: req.session.isLogin,
+                user: req.session.user,
+            })
         });
 
         done();

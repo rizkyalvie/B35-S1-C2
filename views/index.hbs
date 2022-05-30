@@ -13,7 +13,8 @@
         <div class="d-flex top-container justify-content-center" style="width: 100%; height: 100%;">
             <div class="d-flex personal-card m-auto justify-content-between" style="width: 90%;">
                 <div class="card-left w-50">
-                    <h5 class="card-title fs-3">Hi! Welcome to my personal website!</h5>
+                    <h5 class="card-title fs-3">Hi, {{#if isLogin}} {{user.name}}!{{else}} everyone! {{/if}}</h5>
+                    <h5 class="card-title fs-3"> Welcome to my personal website!</h5>
                     <p class="card-text">My name is Ananda Rizky Alvie Nuryahya, I was born in Bekasi and growing up in Bali. I'm a high school graduate with Multimedia school major. I worked for 6 months in My previous job as an IT Specialist to install sensory electronic
                         water meter devices for Continuous Online Wastewater Quality Monitoring System.</p>
                     <div class="pc-btn">

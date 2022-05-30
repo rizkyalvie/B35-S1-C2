@@ -163,6 +163,7 @@ nav li a {
     height: 450px;
     border-radius: 15px;
     overflow: hidden;
+    margin-top: 20px;
     margin-right: -80px;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
