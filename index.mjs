@@ -129,7 +129,6 @@ app.get('/', function(req, res) {
                 homeActive: true,
                 active: "active",
                 isLogin,
-                modal: projectModal,
                 card: projectCard,
 
             })
