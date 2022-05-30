@@ -1,4 +1,3 @@
-// package import -----------------------
 import express from 'express';
 import hbs from 'hbs';
 import path from 'path';
@@ -6,11 +5,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import db from './connection/db.js';
 import nodemailer from 'nodemailer';
-import bcrypt from 'bcrypt';
-import session from 'express-session';
-import flash from 'express-flash';
-import { resourceUsage } from 'process';
-//package import x ----------------------
 
 const app = express()
 
@@ -19,27 +13,18 @@ const __filename = fileURLToPath(
 );
 
 const __dirname = dirname(__filename);
+//handlebars
+
+hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 app.use('/public', express.static(__dirname + '/public'))
 
 app.use(express.urlencoded({ extended: false }))
 
-app.use(
-    session({
-        secret: 'secret',
-        resave: false,
-        saveUninitialized: true,
-        cookie: { maxAge: 1000 * 60 * 60 * 1 },
-    })
-);
-
-app.use(flash());
 
 app.set('view engine', 'hbs')
 
-hbs.registerPartials(path.join(__dirname, '/views/partials'));
-
-// function and global declaration --------------------------------------------------------
+// --------------------------------------------------------
 
 function getProjectDuration(endDate, startDate) {
 
@@ -91,10 +76,6 @@ function getFullTime(time) {
 
 let isLogin = true;
 
-// function and global declaration x ------------------------------------------------------
-
-// index -----------------------------------------------------
-
 app.get('/', function(req, res) {
 
     db.connect(function(err, client, done) {
@@ -107,20 +88,51 @@ app.get('/', function(req, res) {
 
             const projectData = result.rows
 
+
+            function getProjectDuration(endDate, startDate) {
+
+                endDate = new Date(endDate)
+                startDate = new Date(startDate)
+
+                const distance = endDate - startDate
+
+                const miliseconds = 1000
+                const secondInMinute = 60
+                const minuteInHour = 60
+                const secondInHour = secondInMinute * minuteInHour // 3600
+                const hourInDay = 23
+                const dayInMonth = 30
+
+                let dayDistance = distance / (miliseconds * secondInHour * hourInDay)
+
+                if (dayDistance >= 30) {
+                    return `${Math.floor(dayDistance / dayInMonth)}` + ` Bulan`
+                } else {
+                    return `${Math.floor(dayDistance)}` + ' Hari'
+                }
+            }
+
             const projectCard = projectData.map((data) => {
 
+                return {
+                    duration: getProjectDuration(data.end_date, data.start_date),
+                    isLogin,
+                    ...data
 
-                data.duration = getProjectDuration(data.end_date, data.start_date),
-                    data.isLogin = req.session.isLogin
-
-                return data
+                }
             })
+
+            const projectModal = projectCard[2]
 
             res.render('index', {
                 title: "Home",
                 homeActive: true,
                 active: "active",
                 isLogin,
+<<<<<<< HEAD
+=======
+                modal: projectModal,
+>>>>>>> parent of 87a6b88 (Day 6)
                 card: projectCard,
 
             })
@@ -128,12 +140,7 @@ app.get('/', function(req, res) {
         done();
     })
 
-    console.log(isLogin)
 })
-
-// index x -----------------------------------------------------
-
-// contact -----------------------------------------------------
 
 app.get('/contact', function(req, res) {
     res.render('contact', { title: "Contact Me" })
@@ -173,21 +180,10 @@ app.post('/contact', function(req, res) {
     res.redirect('/')
 })
 
-// contact x -----------------------------------------------------
-
-// add project -----------------------------------------------------
-
 app.get('/addproject', function(req, res) {
 
 
-    res.render('addproject', {
-        title: "Add Project",
-        apActive: true,
-        active: "active",
-        isLogin,
-        isLogin: req.session.isLogin,
-        user: req.session.user,
-    })
+    res.render('addproject', { title: "Add Project", apActive: true, active: "active", isLogin })
 })
 
 app.post('/addproject', function(req, res) {
@@ -236,10 +232,6 @@ app.post('/addproject', function(req, res) {
 
 })
 
-// add project x -----------------------------------------------------
-
-// project detail -----------------------------------------------------
-
 app.get('/project-detail/:id', function(req, res) {
 
     let id = req.params.id
@@ -264,10 +256,6 @@ app.get('/project-detail/:id', function(req, res) {
     });
 })
 
-// project detail x -----------------------------------------------------
-
-// delete project -----------------------------------------------------
-
 app.get('/delete-project/:id', function(req, res) {
 
     let id = req.params.id
@@ -287,10 +275,6 @@ app.get('/delete-project/:id', function(req, res) {
     });
 
 })
-
-// delete project x -----------------------------------------------------
-
-// edit project -----------------------------------------------------
 
 app.get('/editproject/:id', function(req, res) {
 
@@ -365,110 +349,6 @@ app.post('/editproject/:id', function(req, res) {
 
 })
 
-// edit project x -----------------------------------------------------
-
-// login -----------------------------------------------------
-
-app.get('/login', function(req, res) {
-
-
-    res.render('login', {
-        title: "Login",
-        logActive: true,
-        active: "active",
-    })
-})
-
-app.post('/login', function(req, res) {
-
-    const email = req.body.loginEmail
-    const password = req.body.loginPassword;
-
-    if (email == '' || password == '') {
-        req.flash('warning', 'Please insert all fields');
-        return res.redirect('/login');
-    }
-
-    db.connect(function(err, client, done) {
-        if (err) throw err;
-
-        const query = `SELECT * FROM tb_user WHERE email = '${email}';`;
-
-        client.query(query, function(err, result) {
-            if (err) throw err;
-
-            const accountData = result.rows;
-
-            if (accountData.length == 0) {
-                req.flash('error', 'Email not found');
-                return res.redirect('/login');
-            }
-
-            const passwordDec = bcrypt.compareSync(password, accountData[0].password);
-
-            if (passwordDec == false) {
-                req.flash('error', 'Wrong password');
-                return res.redirect('/login');
-            }
-
-            req.session.isLogin = true;
-            req.session.user = {
-                id: accountData[0].id,
-                email: accountData[0].email,
-                name: accountData[0].name,
-            };
-
-            req.flash('success', `Welcome, <b>${accountData[0].name}</b>`);
-
-            res.redirect('/');
-        });
-
-        done();
-    });
-});
-
-// login x -----------------------------------------------------
-
-// register -----------------------------------------------------
-
-app.get('/register', function(req, res) {
-    res.render('register', { title: 'Register', regActive: true, active: "active" })
-})
-
-app.post('/register', function(req, res) {
-
-    let name = req.body.registerName
-    let email = req.body.registerEmail
-    let password = req.body.registerPassword
-
-    password = bcrypt.hashSync(password, 10)
-
-    db.connect(function(err, client, done) {
-        if (err) throw err;
-
-        const query = `INSERT INTO tb_user (name, email, password) 
-                       VALUES ('${name}', '${email}', '${password}')`
-
-        client.query(query, function(err, result) {
-            if (err) throw err;
-
-
-        })
-        done();
-    })
-
-    res.redirect('/login')
-
-
-})
-
-// register x -----------------------------------------------------
-
-
-app.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/');
-});
 
 const port = 8080
 app.listen(port, function() {
