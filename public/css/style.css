@@ -37,35 +37,16 @@ nav li a {
     font-weight: bold !important;
 }
 
-.logreg {
-    display: flex;
-    justify-content: end;
-    gap: 10px;
-    float: end;
-    margin-right: 20px;
-    font-weight: 0 !important
+.nav-cm a {
+    padding: 5px 15px;
+    background-color: var(--btn);
+    border-radius: 10px;
+    color: white;
 }
 
-.logreg a {
-    text-decoration: none;
-    color: grey;
-    font-weight: bold!important
-}
-
-.logreg a:hover {
-    color: black
-}
-
-.contact-btn a {
-    padding: 5px 15px !important;
-    background-color: var(--btn) !important;
-    border-radius: 10px !important;
-    color: white !important;
-}
-
-.contact-btn a:hover {
-    background-color: var(--btn-hover) !important;
-    color: white !important;
+.nav-cm a:hover {
+    background-color: var(--btn-hover);
+    color: white;
 }
 
 

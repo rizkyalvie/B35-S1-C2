@@ -10,30 +10,11 @@
                     <li class="nav-item">
                         <a class="nav-link nav-blog {{#if apActive}} active {{/if}}" href="/addproject">Add project</a>
                     </li>
-                    {{/if}} 
-                </ul>
-                <ul class="navbar-nav ">
-                    <div class="logreg">
-                        {{#if isLogin}}
-                    <li class="nav-item">
-                        <span >{{user.name}},</span>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/logout">Logout</a>
-                    </li>
-                    {{else}}
-                    <li class="nav-item">
-                            <a class="nav-link nav-log {{#if logActive}} active {{/if}}" href="/login" >Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-reg {{#if regActive}} active {{/if}}" href="/register" >Register</a>
-                    </li>
                     {{/if}}
-                    </div>
-                    </ul>
-                    <div class="contact-btn">
-                        <a class="btn button-dw me-5 " href="/contact">Contact me</a>
-                    </div>
+                </ul>
+                <div class="d-flex nav-cm">
+                    <a class="btn button-dw me-5" href="/contact">Contact me</a>
+                </div>
             </div>
         </div>
     </nav>
