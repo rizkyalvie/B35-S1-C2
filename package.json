@@ -14,7 +14,10 @@
     },
     "homepage": "https://github.com/rizkyalvie/B35-S1-C2-D2#readme",
     "dependencies": {
+        "bcrypt": "^5.0.1",
         "express": "^4.18.1",
+        "express-flash": "^0.0.2",
+        "express-session": "^1.17.3",
         "handlebars": "^4.7.7",
         "handlebars-helper-ternary": "^1.0.0",
         "hbs": "^4.2.0",
