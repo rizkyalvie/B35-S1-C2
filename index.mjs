@@ -185,7 +185,6 @@ app.get('/addproject', function(req, res) {
         title: "Add Project",
         apActive: true,
         active: "active",
-        isLogin,
         isLogin: req.session.isLogin,
         user: req.session.user,
     })
