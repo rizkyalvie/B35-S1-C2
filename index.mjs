@@ -119,7 +119,6 @@ app.get('/', function(req, res) {
 
             const projectCard = projectData.map((data) => {
 
-
                 data.duration = getProjectDuration(data.end_date, data.start_date),
                     data.isLogin = req.session.isLogin,
                     data.image = data.image ? '/uploads/' + data.image : '/public/assets/DWB.png';
@@ -270,6 +269,8 @@ app.get('/project-detail/:id', function(req, res) {
             projectDetail.duration = getProjectDuration(projectDetail.end_date, projectDetail.start_date)
             projectDetail.start_date = getFullTime(projectDetail.start_date)
             projectDetail.end_date = getFullTime(projectDetail.end_date)
+            projectDetail.isLogin = req.session.isLogin,
+                projectDetail.image = projectDetail.image ? '/uploads/' + projectDetail.image : '/public/assets/DWB.png';
 
             res.render('project-detail', {
                 title: projectDetail.title,
