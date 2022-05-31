@@ -326,9 +326,12 @@ app.get('/editproject/:id', function(req, res) {
             if (err) throw err;
 
             const projectData = result.rows[0];
-
+            const image = projectData.image = projectData.image ? '/uploads/' + projectData.image : '/public/assets/DWB.png';
             res.render('editproject', {
                 title: 'Edit Project',
+                image: image,
+                isLogin: req.session.isLogin,
+                user: req.session.user,
                 edit: projectData,
                 id: data
             })
@@ -337,7 +340,7 @@ app.get('/editproject/:id', function(req, res) {
     })
 })
 
-app.post('/editproject/:id', function(req, res) {
+app.post('/editproject/:id', upload.single('pImage'), function(req, res) {
 
     let id = req.params.id
 
@@ -346,7 +349,7 @@ app.post('/editproject/:id', function(req, res) {
     const end_date = req.body.projectEndDate
     const description = req.body.projectContent
     const technologies = []
-    const image = req.body.editImage
+    const uploadFile = req.file.filename
 
     if (req.body.checkHtml) {
         technologies.push('html');
@@ -373,7 +376,7 @@ app.post('/editproject/:id', function(req, res) {
         if (err) throw err;
 
         const query = `UPDATE tb_project 
-                       SET title = '${title}', start_date = '${start_date}', end_date = '${end_date}', description = '${description}', technologies = ARRAY ['${technologies[0]}', '${technologies[1]}','${technologies[2]}', '${technologies[3]}'], image='${image}' 
+                       SET title = '${title}', start_date = '${start_date}', end_date = '${end_date}', description = '${description}', technologies = ARRAY ['${technologies[0]}', '${technologies[1]}','${technologies[2]}', '${technologies[3]}'], image='${uploadFile}' 
                        WHERE id=${id};`
 
         client.query(query, function(err, result) {

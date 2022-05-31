@@ -10,7 +10,7 @@
         <p>EDIT PROJECT</p>
     </div>
     <div class="ap-form m-auto">
-        <form action="/editproject/{{id}}" method="POST">
+        <form action="/editproject/{{id}}" method="POST" enctype='multipart/form-data'>
             <div class="mb-3">
                 <label for="projectInputName" class="form-label">Project Name</label>
                 <input type="text" class="form-control" id="projectInputName" value="{{ edit.title }}" aria-describedby="emailHelp" name="projectTitle">
@@ -65,14 +65,14 @@
             <div>
                 <label>Upload Image</label>
                 <div class="edit-img">
-                    <img src="/public/assets/{{ edit.image }}" alt="">
+                    <img src={{ edit.image }} alt="">
                 </div>
                 <div class="mpi-image">
                     <label for="inputImage">
             <div class="mpi-choose">Choose</div>
             <div class="mpi-attach"><i class="fa-solid fa-paperclip"></i></div>
             </label>
-                    <input type="file" id="inputImage" name="editImage" hidden />
+                    <input type="file" id="inputImage" name="pImage" hidden />
                 </div>
             </div>
             <div class="ap-btn text-end">
