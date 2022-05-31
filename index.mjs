@@ -2,28 +2,26 @@
 import express from 'express';
 import hbs from 'hbs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import db from './connection/db.js';
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
 import flash from 'express-flash';
+import db from './connection/db.js';
+import upload from './middlewares/uploadFile.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import { resourceUsage } from 'process';
+
 // package import x ----------------------
-
 const app = express()
-
 const __filename = fileURLToPath(
     import.meta.url
 );
-
 const __dirname = dirname(__filename);
 
 app.use('/public', express.static(__dirname + '/public'))
-
+app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(express.urlencoded({ extended: false }))
-
 app.use(
     session({
         secret: 'secret',
@@ -32,11 +30,8 @@ app.use(
         cookie: { maxAge: 1000 * 60 * 60 * 1 },
     })
 );
-
 app.use(flash());
-
 app.set('view engine', 'hbs')
-
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 // function and global declaration --------------------------------------------------------
@@ -100,7 +95,22 @@ app.get('/', function(req, res) {
     db.connect(function(err, client, done) {
         if (err) throw err;
 
-        const query = 'SELECT * FROM tb_project'
+        let query = '';
+
+        if (req.session.isLogin == true) {
+            query = `SELECT tb_project.*, tb_user.id as "user_id", tb_user.name, tb_user.email
+            FROM tb_project
+            LEFT JOIN tb_user
+            ON tb_project.author_id = tb_user.id 
+            WHERE tb_project.author_id = ${req.session.user.id}
+            ORDER BY tb_project.id DESC`;
+        } else {
+            query = `SELECT tb_project.*, tb_user.id as "user_id", tb_user.name, tb_user.email
+            FROM tb_project
+            LEFT JOIN tb_user
+            ON tb_project.author_id = tb_user.id
+            ORDER BY tb_project.id DESC`;
+        }
 
         client.query(query, function(err, result) {
             if (err) throw err;
@@ -111,7 +121,8 @@ app.get('/', function(req, res) {
 
 
                 data.duration = getProjectDuration(data.end_date, data.start_date),
-                    data.isLogin = req.session.isLogin
+                    data.isLogin = req.session.isLogin,
+                    data.image = data.image ? '/uploads/' + data.image : '/public/assets/DWB.png';
 
                 return data
             })
@@ -128,8 +139,6 @@ app.get('/', function(req, res) {
         })
         done();
     })
-
-    console.log(isLogin)
 })
 
 // index x -----------------------------------------------------
@@ -194,14 +203,15 @@ app.get('/addproject', function(req, res) {
     })
 })
 
-app.post('/addproject', function(req, res) {
+app.post('/addproject', upload.single('pImage'), function(req, res) {
 
     const title = req.body.projectTitle
     const start_date = req.body.projectStartDate
     const end_date = req.body.projectEndDate
     const description = req.body.projectContent
     const technologies = []
-    const image = req.body.projectImage
+    const userId = req.session.user.id
+    const fileUpload = req.file.filename
 
     if (req.body.checkHtml) {
         technologies.push('html');
@@ -227,8 +237,8 @@ app.post('/addproject', function(req, res) {
     db.connect(function(err, client, done) {
         if (err) throw err;
 
-        const query = `INSERT INTO tb_project (title, start_date, end_date, description, technologies, image) 
-                       VALUES ('${title}', '${start_date}', '${end_date}', '${description}', ARRAY ['${technologies[0]}', '${technologies[1]}','${technologies[2]}', '${technologies[3]}'], '${image}')`
+        const query = `INSERT INTO tb_project (title, start_date, end_date, description, technologies, image, author_id) 
+                       VALUES ('${title}', '${start_date}', '${end_date}', '${description}', ARRAY ['${technologies[0]}', '${technologies[1]}','${technologies[2]}', '${technologies[3]}'], '${fileUpload}', '${userId}')`
 
         client.query(query, function(err, result) {
             if (err) throw err;

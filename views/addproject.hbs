@@ -11,7 +11,7 @@
         <p>ADD PROJECT</p>
     </div>
     <div class="ap-form m-auto">
-        <form action="/addproject" method="POST">
+        <form action="/addproject" method="POST" enctype='multipart/form-data'>
             <div class="mb-3">
                 <label for="projectInputName" class="form-label">Project Name</label>
                 <input type="text" class="form-control" id="projectInputName" aria-describedby="emailHelp" name="projectTitle">
@@ -70,7 +70,7 @@
             <div class="mpi-choose">Choose</div>
             <div class="mpi-attach"><i class="fa-solid fa-paperclip"></i></div>
             </label>
-                    <input type="file" id="inputImage" name="projectImage" hidden />
+                    <input type="file" id="inputImage" name="pImage" hidden />
                 </div>
             </div>
             <div class="ap-btn text-end">
